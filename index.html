@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(223, 223, 223);
+            margin: 0;
+            padding: 0;
+        }
+
+        .topSide {
+            height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(41, 168, 168);
+            margin-left: 1%;
+            box-shadow: 5px 5px 5px 0px rgb(138, 136, 136);
+            width: 1300px;
+            background-color: rgb(28, 95, 196);
+            position: sticky;
+            top: 0;
+            border-radius: 5px;
+        }
+
+        .inputs {
+            margin-top: 1.5%;
+            width: 280px;
+            height: 40px;
+            border-radius: 4px;
+            border: none;
+            margin-right: 10px;
+        }
+
+        .button {
+            margin-top: 1.5%;
+            width: 180px;
+            height: 40px;
+            border-radius: 4px;
+            border: none;
+            background-color: rgb(31, 186, 31);
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: rgb(37, 224, 37);
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 80px;
+        }
+
+        th,
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topSide" id="getData">
+        <form onsubmit="addValue(event)">
+            <input id="StudentNameI" class="inputs" type="text" placeholder="STUDENT NAME" maxlength="15" minlength="4">
+            <input id="studentAgeI" class="inputs" type="number" placeholder="STUDENT AGE" maxlength="2">
+            <input id="studentRollNumI" class="inputs" type="number,text" placeholder="ROLL NUMBER" maxlength="8">
+            <button id="button" class="button" type="submit">Add Student</button>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>No#</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Roll Number</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="studentTableBody">
+            <!-- Table body will be populated dynamically -->
+        </tbody>
+    </table>
+
+    <script>
+        function addValue(event) {
+            event.preventDefault();
+
+            let StudentNameI = document.getElementById("StudentNameI").value;
+            let studentAgeI = document.getElementById("studentAgeI").value;
+            let studentRollNumI = document.getElementById("studentRollNumI").value;
+
+            if (StudentNameI && studentAgeI && studentRollNumI) {
+                // Create a new table row
+                let newRow = document.createElement("tr");
+
+                // Add cells to the row
+                let cellNo = document.createElement("td");
+                let cellName = document.createElement("td");
+                let cellAge = document.createElement("td");
+                let cellRollNum = document.createElement("td");
+                let cellAction = document.createElement("td");
+                let cellaction2 = document.createElement("td");
+
+                // Set cell values
+                cellNo.textContent = document.getElementById("studentTableBody").childElementCount + 1;
+                cellName.textContent = StudentNameI;
+                cellAge.textContent = studentAgeI;
+                cellRollNum.textContent = studentRollNumI;
+                cellAction.innerHTML = '<button onclick="deleteRow(this)">Delete</button>';
+
+                // Append cells to the row
+                newRow.appendChild(cellNo);
+                newRow.appendChild(cellName);
+                newRow.appendChild(cellAge);
+                newRow.appendChild(cellRollNum);
+                newRow.appendChild(cellAction);
+
+                // Append the row to the table body
+                document.getElementById("studentTableBody").appendChild(newRow);
+
+                // Clear the form inputs
+                document.getElementById("StudentNameI").value = "";
+                document.getElementById("studentAgeI").value = "";
+                document.getElementById("studentRollNumI").value = "";
+            } else {
+                alert("Please fill in all fields");
+            }
+        }
+
+        function deleteRow(button) {
+            // Get the row to be deleted
+            let row = button.parentNode.parentNode;
+
+            // Remove the row from the table
+            row.remove();
+        }
+    </script>
+</body>
+
+</html>
